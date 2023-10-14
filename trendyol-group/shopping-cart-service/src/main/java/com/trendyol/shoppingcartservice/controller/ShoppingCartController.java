@@ -4,9 +4,10 @@ import com.trendyol.common.enpoints.ShoppingCartEndpoints;
 import com.trendyol.common.model.request.shoppingcart.AddItemRequest;
 import com.trendyol.common.model.request.shoppingcart.AddVasItemToItemRequest;
 import com.trendyol.common.model.request.shoppingcart.RemoveItemRequest;
-import com.trendyol.entity.document.cart.CartDocument;
+import com.trendyol.common.model.resource.CartResource;
 import com.trendyol.entity.document.cart.CartItemDocument;
 import com.trendyol.entity.document.cart.VasItemDocument;
+import com.trendyol.shoppingcartservice.card.converter.CartDocumentConverter;
 import com.trendyol.shoppingcartservice.card.converter.CartItemDocumentConverter;
 import com.trendyol.shoppingcartservice.card.converter.VasItemConverter;
 import com.trendyol.shoppingcartservice.service.ShoppingCardService;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShoppingCartController {
 
     private final ShoppingCardService shoppingCardService;
+    private final CartDocumentConverter cartDocumentConverter;
     private final CartItemDocumentConverter cartItemDocumentConverter;
     private final VasItemConverter vasItemConverter;
 
@@ -56,7 +58,7 @@ public class ShoppingCartController {
     }
 
     @GetMapping
-    public ResponseEntity<CartDocument> displayCart() {
-        return ResponseEntity.ok(shoppingCardService.displayCart());
+    public ResponseEntity<CartResource> displayCart() {
+        return ResponseEntity.ok(cartDocumentConverter.toResource(shoppingCardService.displayCart()));
     }
 }

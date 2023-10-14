@@ -30,3 +30,10 @@ eureka:
       defaultZone: ${EUREKA_URI:http://localhost:8500/eureka}
   instance:
     preferIpAddress: true
+
+spcloud:
+  shopping-cart-task:
+    scheduler-cron: 0 * * * * ?
+    input-file-path: /Users/sahih/Desktop/trendyol
+    input-file-name: shopping-cart
+    output-file-path: /Users/sahih/Desktop/trendyol

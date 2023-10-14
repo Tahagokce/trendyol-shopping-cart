@@ -1,6 +1,7 @@
 package com.trendyol.shoppingcartservice.card.converter;
 
 import com.trendyol.common.model.request.shoppingcart.AddVasItemToItemRequest;
+import com.trendyol.common.model.resource.VasItemResource;
 import com.trendyol.entity.document.cart.VasItemDocument;
 import org.springframework.stereotype.Component;
 
@@ -15,5 +16,15 @@ public class VasItemConverter {
         document.setPrice(request.getPrice());
         document.setQuantity(request.getQuantity());
         return document;
+    }
+
+    public VasItemResource toResource(VasItemDocument document){
+        VasItemResource resource = new VasItemResource();
+        resource.setVasItemId(document.getVasItemId());
+        resource.setVasCategoryId(resource.getVasCategoryId());
+        resource.setVasSellerId(resource.getVasSellerId());
+        resource.setPrice(document.getPrice());
+        resource.setQuantity(document.getQuantity());
+        return resource;
     }
 }

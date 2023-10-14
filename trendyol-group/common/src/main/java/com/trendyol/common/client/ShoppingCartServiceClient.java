@@ -4,6 +4,7 @@ import com.trendyol.common.enpoints.ShoppingCartEndpoints;
 import com.trendyol.common.model.request.shoppingcart.AddItemRequest;
 import com.trendyol.common.model.request.shoppingcart.AddVasItemToItemRequest;
 import com.trendyol.common.model.request.shoppingcart.RemoveItemRequest;
+import com.trendyol.common.model.resource.CartResource;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,5 +28,5 @@ public interface ShoppingCartServiceClient {
     ResponseEntity<Void> resetCart();
 
     @GetMapping
-    ResponseEntity<Void> findCart();
+    ResponseEntity<CartResource> displayCart();
 }
