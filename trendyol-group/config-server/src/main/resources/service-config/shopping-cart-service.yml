@@ -1,0 +1,36 @@
+server:
+  port: 8501
+
+spring:
+  application:
+    name: shopping-cart-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shopping-cart
+    username: postgres
+    password: xxx
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      connection.characterEncoding: utf-8
+      connection.CharSet: utf-8
+      connection.useUnicode: true
+      hibernate.jdbc.time_zone: UTC
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8500/eureka}
+  instance:
+    preferIpAddress: true
