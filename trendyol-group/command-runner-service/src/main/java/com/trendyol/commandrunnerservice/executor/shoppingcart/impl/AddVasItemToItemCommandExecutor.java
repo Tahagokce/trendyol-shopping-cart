@@ -6,6 +6,7 @@ import com.trendyol.common.enums.ShoppingCartCommandType;
 import com.trendyol.common.model.input.cart.AddVasItemToItemInputPayload;
 import com.trendyol.common.model.request.shoppingcart.AddVasItemToItemRequest;
 import com.trendyol.core.model.output.BaseFileOutput;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,15 @@ public class AddVasItemToItemCommandExecutor implements ShoppingCartCommandExecu
     @Override
     public BaseFileOutput execute(Object input) {
         AddVasItemToItemInputPayload payload = (AddVasItemToItemInputPayload) input;
-        ResponseEntity<Void> response = shoppingCartServiceClient.addVasItemToItem(prepareRequest(payload));
+        try {
+            ResponseEntity<Void> response = shoppingCartServiceClient.addVasItemToItem(prepareRequest(payload));
 
-        return response.getStatusCode().isError()
-                ? BaseFileOutput.error()
-                : BaseFileOutput.success();
+            return response.getStatusCode().isError()
+                    ? BaseFileOutput.error()
+                    : BaseFileOutput.success();
+        } catch (FeignException e) {
+            return BaseFileOutput.error(e.getMessage());
+        }
     }
 
     @Override

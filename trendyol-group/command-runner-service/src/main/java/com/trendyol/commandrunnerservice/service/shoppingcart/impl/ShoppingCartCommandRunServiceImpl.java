@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,9 @@ public class ShoppingCartCommandRunServiceImpl implements ShoppingCartCommandRun
     @Value("${spcloud.shopping-cart-task.output-file-path}")
     private String outputFilePath;
 
+    @Value("${spcloud.shopping-cart-task.output-file-name}")
+    private String outputFileName;
+
     private final ShoppingCartCommandExecutorFactory shoppingCartCommandExecutorFactory;
 
     private final CommandFileService commandFileService;
@@ -39,14 +43,13 @@ public class ShoppingCartCommandRunServiceImpl implements ShoppingCartCommandRun
     @Override
     public void run() {
         List<JsonObject> inputs = commandFileService.read(inputFilePath, inputFileName);
-        inputs.stream().map(this::process)
-                .forEach(
-                        result -> commandFileService.write(
-                                outputFilePath
-                                , result.getFileName()
-                                , JsonUtil.toString(result.getOutput())
-                        )
-                );
+        String output = inputs.stream().map(this::process)
+                .map(ShoppingCartFileOutputDto::getOutput)
+                .map(JsonUtil::toString)
+                .collect(Collectors.joining(System.lineSeparator()));
+
+        commandFileService.write(outputFilePath, outputFileName, output);
+
     }
 
     private ShoppingCartFileOutputDto process(JsonObject input) {

@@ -4,6 +4,7 @@ import com.trendyol.commandrunnerservice.executor.shoppingcart.ShoppingCartComma
 import com.trendyol.common.client.ShoppingCartServiceClient;
 import com.trendyol.common.enums.ShoppingCartCommandType;
 import com.trendyol.core.model.output.BaseFileOutput;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,15 @@ public class ResetCartCommandExecutor implements ShoppingCartCommandExecutorServ
 
     @Override
     public BaseFileOutput execute(Object input) {
-        ResponseEntity<Void> response = shoppingCartServiceClient.resetCart();
+        try {
+            ResponseEntity<Void> response = shoppingCartServiceClient.resetCart();
 
-        return response.getStatusCode().isError()
-                ? BaseFileOutput.error()
-                : BaseFileOutput.success();
+            return response.getStatusCode().isError()
+                    ? BaseFileOutput.error()
+                    : BaseFileOutput.success();
+        } catch (FeignException e) {
+            return BaseFileOutput.error(e.getMessage());
+        }
     }
 
     @Override

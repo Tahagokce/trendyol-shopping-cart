@@ -16,6 +16,10 @@ public class BaseFileOutput implements Serializable {
     }
 
     public static BaseFileOutput error() {
-        return BaseFileOutput.of(false, "error");
+        return BaseFileOutput.error("error");
+    }
+
+    public static BaseFileOutput error(String message) {
+        return BaseFileOutput.of(false, message);
     }
 }

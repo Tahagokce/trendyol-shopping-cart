@@ -12,7 +12,7 @@ public class ShoppingCartScheduler {
     private final ShoppingCartCommandRunService shoppingCartCommandRunService;
 
     @Scheduled(cron = "${spcloud.shopping-cart-task.scheduler-cron}")
-    public void runCartCommands(){
+    public void runCartCommands() {
         shoppingCartCommandRunService.run();
     }
 }

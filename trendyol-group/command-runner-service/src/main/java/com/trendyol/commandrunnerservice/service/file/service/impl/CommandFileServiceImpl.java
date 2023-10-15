@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -34,7 +35,7 @@ public class CommandFileServiceImpl implements CommandFileService {
     public void write(String filePath, String fileName, String output) {
         Path path = Path.of(filePath, fileName);
         try {
-            Files.writeString(path, output);
+            Files.write(path, output.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             log.error("An error was received while creating the file. Exception Message : {}", e.getMessage());
             throw new CommandFileReadException(e.getMessage());

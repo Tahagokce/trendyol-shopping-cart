@@ -6,6 +6,7 @@ import com.trendyol.common.enums.ShoppingCartCommandType;
 import com.trendyol.common.model.resource.CartResource;
 import com.trendyol.common.util.JsonUtil;
 import com.trendyol.core.model.output.BaseFileOutput;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,16 @@ public class DisplayCartCommandExecutor implements ShoppingCartCommandExecutorSe
 
     @Override
     public BaseFileOutput execute(Object input) {
-        ResponseEntity<CartResource> response = shoppingCartServiceClient.displayCart();
+        try {
+            ResponseEntity<CartResource> response = shoppingCartServiceClient.displayCart();
 
-        return response.getStatusCode().isError()
-                ? BaseFileOutput.error()
-                : BaseFileOutput.of(true, JsonUtil.toString(response.getBody()));
+            return response.getStatusCode().isError()
+                    ? BaseFileOutput.error()
+                    : BaseFileOutput.of(true, JsonUtil.toString(response.getBody()));
+        } catch (
+                FeignException e) {
+            return BaseFileOutput.error(e.getMessage());
+        }
     }
 
     @Override
