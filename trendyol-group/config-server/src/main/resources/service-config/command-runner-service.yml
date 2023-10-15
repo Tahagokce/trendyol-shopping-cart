@@ -5,9 +5,9 @@ spring:
   application:
     name: command-runner-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/shopping-cart
+    url: jdbc:postgresql://***/shopping-cart
     username: postgres
-    password: Taha1919gokce!
+    password: 000****
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
@@ -37,3 +37,4 @@ spcloud:
     input-file-path: /Users/sahih/Desktop/trendyol
     input-file-name: shopping-cart
     output-file-path: /Users/sahih/Desktop/trendyol
+    output-file-name: shopping-cart-output
