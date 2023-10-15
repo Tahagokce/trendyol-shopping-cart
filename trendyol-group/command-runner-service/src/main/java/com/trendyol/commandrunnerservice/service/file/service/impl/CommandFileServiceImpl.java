@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class CommandFileReaderServiceImpl implements CommandFileService {
+public class CommandFileServiceImpl implements CommandFileService {
 
     public List<JsonObject> read(String filePath, String fileName) {
         Path path = Path.of(filePath, fileName);
