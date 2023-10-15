@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="core" />
+        <module name="config-server" />
+        <module name="command-runner-service" />
+        <module name="common" />
+        <module name="integration" />
+        <module name="eureka-server" />
+        <module name="entity" />
+        <module name="shopping-cart-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api-gateway-service" target="17" />
+      <module name="integration" target="17" />
+      <module name="parent-service" target="1.5" />
+      <module name="shopping-card" target="17" />
+      <module name="TahaCemalGokce" target="1.5" />
+      <module name="trendyol-group (1)" target="17" />
+      <module name="trendyol-group (2)" target="1.5" />
+      <module name="trendyol-group-batch" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway-service" options="-parameters" />
+      <module name="command-runner-service" options="-parameters" />
+      <module name="common" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="core" options="-parameters" />
+      <module name="entity" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="integration" options="-parameters" />
+      <module name="shopping-card" options="-parameters" />
+      <module name="shopping-cart-service" options="-parameters" />
+      <module name="trendyol-group (1)" options="-parameters" />
+      <module name="trendyol-group-batch" options="-parameters" />
+    </option>
+  </component>
+</project>

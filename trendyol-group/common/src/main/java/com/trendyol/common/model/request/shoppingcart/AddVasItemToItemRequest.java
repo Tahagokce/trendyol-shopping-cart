@@ -1,6 +1,5 @@
 package com.trendyol.common.model.request.shoppingcart;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -30,7 +29,6 @@ public class AddVasItemToItemRequest {
 
     @NotNull
     @Min(value = 1, message = "Quantity must be at least 0")
-    @Max(value = 3, message = "Quantity maximum can be 3")
     private Integer quantity;
 
 }

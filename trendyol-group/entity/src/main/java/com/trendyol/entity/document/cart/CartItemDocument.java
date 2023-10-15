@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Document
 @Getter
@@ -24,4 +25,16 @@ public class CartItemDocument {
 
     private List<VasItemDocument> vasItems = new ArrayList<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartItemDocument that = (CartItemDocument) o;
+        return Objects.equals(itemId, that.itemId) && Objects.equals(categoryId, that.categoryId) && Objects.equals(sellerId, that.sellerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemId, categoryId, sellerId);
+    }
 }

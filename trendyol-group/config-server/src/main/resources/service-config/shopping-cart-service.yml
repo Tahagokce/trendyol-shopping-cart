@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/shopping-cart
     username: postgres
-    password: xxx
+    password: Taha1919gokce!
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true

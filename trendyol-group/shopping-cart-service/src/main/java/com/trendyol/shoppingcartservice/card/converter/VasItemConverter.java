@@ -21,8 +21,8 @@ public class VasItemConverter {
     public VasItemResource toResource(VasItemDocument document){
         VasItemResource resource = new VasItemResource();
         resource.setVasItemId(document.getVasItemId());
-        resource.setVasCategoryId(resource.getVasCategoryId());
-        resource.setVasSellerId(resource.getVasSellerId());
+        resource.setVasCategoryId(document.getCategoryId());
+        resource.setVasSellerId(document.getSellerId());
         resource.setPrice(document.getPrice());
         resource.setQuantity(document.getQuantity());
         return resource;

@@ -29,7 +29,7 @@ public class CartDocumentConverter {
         CartResource resource = new CartResource();
         resource.setTotalAmount(document.getTotalAmount());
         resource.setAppliedPromotionId(document.getAppliedPromotionId());
-        resource.setTotalDiscount(resource.getTotalDiscount());
+        resource.setTotalDiscount(document.getTotalDiscount());
         resource.setItems(document.getItems().stream().map(cartItemDocumentConverter::toResource).toList());
         return resource;
     }

@@ -3,7 +3,6 @@ package com.trendyol.shoppingcartservice.promotion.util;
 import com.trendyol.core.model.dto.AppliedPromotionDto;
 import com.trendyol.entity.document.cart.CartDocument;
 import com.trendyol.entity.document.cart.CartItemDocument;
-import com.trendyol.entity.document.cart.VasItemDocument;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.CollectionUtils;
 
@@ -21,7 +20,7 @@ public class PromotionUtil {
                         getCategoryPromotion(cart),
                         getTotalPricePromotion(cart)
                 ).min(Comparator.comparingDouble(AppliedPromotionDto::getTotalAmount))
-                .orElse(AppliedPromotionDto.of(cart.getAppliedPromotionId(), cart.getTotalAmount(), cart.getTotalDiscount()));
+                .orElse(AppliedPromotionDto.of(0L, calculatePrice(cart), 0.0));
 
     }
 
@@ -30,11 +29,17 @@ public class PromotionUtil {
         Long promotionId = null;
         double totalAmount = totalPrice;
         double totalDiscount = 0.0;
+        boolean isSame;
 
-        boolean isSame = cart.getItems().stream()
-                .map(CartItemDocument::getSellerId)
-                .distinct()
-                .count() == 1;
+        if (cart.getItems().size() > 1) {
+            isSame = cart.getItems().stream()
+                    .map(CartItemDocument::getSellerId)
+                    .distinct()
+                    .count() == 1;
+
+        } else {
+            isSame = !CollectionUtils.isEmpty(cart.getItems()) && cart.getItems().get(0).getQuantity() > 1;
+        }
 
         if (isSame) {
             promotionId = 9909L;
@@ -99,6 +104,6 @@ public class PromotionUtil {
     }
 
     private Double calculatePrice(CartItemDocument cartItem) {
-        return (cartItem.getPrice() * cartItem.getQuantity()) + cartItem.getVasItems().stream().mapToDouble(VasItemDocument::getPrice).sum();
+        return (cartItem.getPrice() * cartItem.getQuantity()) + cartItem.getVasItems().stream().mapToDouble(vasItem -> vasItem.getPrice() * vasItem.getQuantity()).sum();
     }
 }
