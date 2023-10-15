@@ -20,7 +20,7 @@ class AddItemRequestTest {
     }
 
     @Test
-    void setQuantity() {
+    void testGetterSetter() {
         // arrange
         AddItemRequest actual = new AddItemRequest();
         actual.setItemId(expected.getItemId());
