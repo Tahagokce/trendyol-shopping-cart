@@ -1,5 +1,6 @@
 package com.trendyol.shoppingcartservice.service.impl;
 
+import com.trendyol.common.constant.ApplicationConstant;
 import com.trendyol.common.exception.LoggedUserNotFoundException;
 import com.trendyol.common.exception.RuleNotValidException;
 import com.trendyol.core.util.SecurityUtil;
@@ -12,6 +13,7 @@ import com.trendyol.shoppingcartservice.rule.executor.AddItemValidationRuleExecu
 import com.trendyol.shoppingcartservice.rule.executor.AddVasItemToItemValidationRuleExecutor;
 import com.trendyol.shoppingcartservice.service.ShoppingCardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ShoppingCardServiceImpl implements ShoppingCardService {
 
@@ -51,6 +54,8 @@ public class ShoppingCardServiceImpl implements ShoppingCardService {
 
         // Register card
         cartService.save(cart);
+        log.info(ApplicationConstant.GLOBAL_LOG_INFO_PATTERN, getClass().getSimpleName(), "addItem", "Adding products to cart was successful");
+
     }
 
     @Override
@@ -93,6 +98,7 @@ public class ShoppingCardServiceImpl implements ShoppingCardService {
         // If the verification is successful, the amount is calculated and saved.
         CartUtil.calculateAmount(cart);
         cartService.save(cart);
+        log.info(ApplicationConstant.GLOBAL_LOG_INFO_PATTERN, getClass().getSimpleName(), "addVasItemToItem", "Adding vas item to Cart Item was successful");
     }
 
 
@@ -109,6 +115,7 @@ public class ShoppingCardServiceImpl implements ShoppingCardService {
         cart.setItems(cartItems);
         CartUtil.calculateAmount(cart);
         cartService.save(cart);
+        log.info(ApplicationConstant.GLOBAL_LOG_INFO_PATTERN, getClass().getSimpleName(), "removeItem", "Cart Remove Item Successful");
     }
 
     @Override
@@ -122,10 +129,12 @@ public class ShoppingCardServiceImpl implements ShoppingCardService {
 
         CartUtil.calculateAmount(cart);
         cartService.save(cart);
+        log.info(ApplicationConstant.GLOBAL_LOG_INFO_PATTERN, getClass().getSimpleName(), "resetCart", "Cart Reset Successful");
     }
 
     @Override
     public CartDocument displayCart() {
+        log.info(ApplicationConstant.GLOBAL_LOG_INFO_PATTERN, getClass().getSimpleName(), "displayCart", "Cart Viewed");
         return getCartForLoggedUser();
     }
 

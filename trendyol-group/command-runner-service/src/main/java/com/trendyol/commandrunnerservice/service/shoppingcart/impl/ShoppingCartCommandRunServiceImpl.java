@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.trendyol.commandrunnerservice.executor.shoppingcart.factory.ShoppingCartCommandExecutorFactory;
 import com.trendyol.commandrunnerservice.service.file.service.CommandFileService;
 import com.trendyol.commandrunnerservice.service.shoppingcart.ShoppingCartCommandRunService;
+import com.trendyol.common.constant.ApplicationConstant;
 import com.trendyol.common.constant.FileInputConstants;
 import com.trendyol.common.enums.ShoppingCartCommandType;
 import com.trendyol.common.util.JsonUtil;
@@ -12,6 +13,7 @@ import com.trendyol.core.model.dto.ShoppingCartFileOutputDto;
 import com.trendyol.core.model.input.BaseFileInputPayload;
 import com.trendyol.core.model.output.BaseFileOutput;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ShoppingCartCommandRunServiceImpl implements ShoppingCartCommandRunService {
 
@@ -53,9 +56,12 @@ public class ShoppingCartCommandRunServiceImpl implements ShoppingCartCommandRun
     }
 
     private ShoppingCartFileOutputDto process(JsonObject input) {
+        String methodName = "process";
+        log.info(ApplicationConstant.GLOBAL_LOG_INFO_PATTERN, getClass().getSimpleName(), methodName, "Command Execution process started...");
         String command = input.get(FileInputConstants.COMMAND).getAsString();
 
         if (StringUtils.isBlank(command)) {
+            log.error(ApplicationConstant.GLOBAL_LOG_INFO_PATTERN, getClass().getSimpleName(), methodName, "Incorrect command entry");
             return ShoppingCartFileOutputDto.of(FileInputConstants.ERROR, BaseFileOutput.error());
         }
 
@@ -65,6 +71,7 @@ public class ShoppingCartCommandRunServiceImpl implements ShoppingCartCommandRun
         BaseFileInputPayload payload = JsonUtil.toObject(jsonElement, Objects.requireNonNull(commandType).getClazz());
 
         BaseFileOutput output = shoppingCartCommandExecutorFactory.getResult(commandType, payload);
+        log.info(ApplicationConstant.GLOBAL_LOG_INFO_PATTERN, getClass().getSimpleName(), methodName, "Command Execution process completed successful");
         return ShoppingCartFileOutputDto.of(commandType.getCommand(), output);
     }
 
