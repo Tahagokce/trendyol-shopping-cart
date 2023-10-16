@@ -16,15 +16,15 @@ public class PromotionUtil {
 
     public AppliedPromotionDto applyMostAdvantagePromotion(CartDocument cart) {
         return Stream.of(
-                        getSameSellerPromotion(cart),
-                        getCategoryPromotion(cart),
-                        getTotalPricePromotion(cart)
+                        calculateSameSellerPromotion(cart),
+                        calculateCategoryPromotion(cart),
+                        calculateTotalPricePromotion(cart)
                 ).min(Comparator.comparingDouble(AppliedPromotionDto::getTotalAmount))
                 .orElse(AppliedPromotionDto.of(0L, calculatePrice(cart), 0.0));
 
     }
 
-    public AppliedPromotionDto getSameSellerPromotion(CartDocument cart) {
+    public AppliedPromotionDto calculateSameSellerPromotion(CartDocument cart) {
         double totalPrice = calculatePrice(cart);
         Long promotionId = null;
         double totalAmount = totalPrice;
@@ -50,7 +50,7 @@ public class PromotionUtil {
         return AppliedPromotionDto.of(promotionId, totalAmount, totalDiscount);
     }
 
-    public AppliedPromotionDto getCategoryPromotion(CartDocument cart) {
+    public AppliedPromotionDto calculateCategoryPromotion(CartDocument cart) {
         double totalPrice = calculatePrice(cart);
         Long promotionId = null;
         double totalAmount = totalPrice;
@@ -72,7 +72,7 @@ public class PromotionUtil {
         return AppliedPromotionDto.of(promotionId, totalAmount, totalDiscount);
     }
 
-    public AppliedPromotionDto getTotalPricePromotion(CartDocument cart) {
+    public AppliedPromotionDto calculateTotalPricePromotion(CartDocument cart) {
         double totalPrice = calculatePrice(cart);
         Long promotionId = null;
         double totalAmount;
